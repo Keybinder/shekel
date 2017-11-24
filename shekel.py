@@ -4,13 +4,13 @@ f_mov_input = re.compile("[a-gA-G][1-8] [a-gA-G][1-8]")
 turnw = True
 
 piece_to_bin_dict = {
-     '.' = 0b000,
-     'S' = 0b010,
-     'W' = 0b100,
-     'X' = 0b110,
-     's' = 0b011,
-     'w' = 0b101,
-     'x' = 0b111
+     '.' : 0b000,
+     'S' : 0b010,
+     'W' : 0b100,
+     'X' : 0b110,
+     's' : 0b011,
+     'w' : 0b101,
+     'x' : 0b111
 }
 #blank_board = [['.' for x in range(8)] for x in range(7)] #why is this needed?
 
