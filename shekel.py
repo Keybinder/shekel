@@ -12,7 +12,6 @@ piece_to_bin_dict = {
      'w' = 0b101,
      'x' = 0b111
 }
-
 #blank_board = [['.' for x in range(8)] for x in range(7)] #why is this needed?
 
 # ------------------------------------------------------------------------------
@@ -64,34 +63,34 @@ def parse_move(usr_move):
 
 # ------------------------------------------------------------------------------
 
-def display_board(board, x=1, y=0, gridref=True, compact=False): #add colours? orientation
-
-     gridnums = [i for i in range(8,0,-1)]
-     gridletters = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
-     
-     for i in range(8):
-          if gridref == True:
-               line = str(gridnums[i]) + "|"
-          elif gridref == False:
-               line = ""
-          
-          for j in board[i]:
-               line = line + (x * ' ') + j
-          if gridref == False or y == 0:
-               print(line + (y * '\n'))
-          else:
-               print(line + (y * '\n |'))
-               # pretty sure this shouldn't work but it does
-          
-     if gridref == True:
-          print((" +") + ('-' * (7 + 7 * x)))
-          lastline = "  "
-          for i in gridletters:
-               lastline = lastline + (x * ' ') + i
-          print(lastline)
-
-     if compact == False:
-          print('')
+##def display_board(board, x=1, y=0, gridref=True, compact=False): #add colours? orientation
+##
+##     gridnums = [i for i in range(8,0,-1)]
+##     gridletters = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+##     
+##     for i in range(8):
+##          if gridref == True:
+##               line = str(gridnums[i]) + "|"
+##          elif gridref == False:
+##               line = ""
+##          
+##          for j in board[i]:
+##               line = line + (x * ' ') + j
+##          if gridref == False or y == 0:
+##               print(line + (y * '\n'))
+##          else:
+##               print(line + (y * '\n |'))
+##               # pretty sure this shouldn't work but it does
+##          
+##     if gridref == True:
+##          print((" +") + ('-' * (7 + 7 * x)))
+##          lastline = "  "
+##          for i in gridletters:
+##               lastline = lastline + (x * ' ') + i
+##          print(lastline)
+##
+##     if compact == False:
+##          print('')
 
 # ------------------------------------------------------------------------------
 
