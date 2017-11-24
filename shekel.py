@@ -12,6 +12,7 @@ piece_to_bin_dict = {
      'w' = 0b101,
      'x' = 0b111
 }
+
 #blank_board = [['.' for x in range(8)] for x in range(7)] #why is this needed?
 
 # ------------------------------------------------------------------------------
