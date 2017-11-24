@@ -134,33 +134,33 @@ def move_piece(move, board): # Returns board after piece has been moved
 
 # ------------------------------------------------------------------------------
 
-def menu():
-     print(startup_msg)
-     # TODO: Add actual menu with user input and option selection
+##def menu():
+##     print(startup_msg)
+##     # TODO: Add actual menu with user input and option selection
      
 # ------------------------------------------------------------------------------
 
 # Testing below
-shekel_board = set_board()
-
-display_board(shekel_board)
-
-#display_board(shekel_board, x=0, y=0)
-#display_board(shekel_board, gridref=False)
-#display_board(shekel_board, x=2, y=2)
-#display_board(shekel_board, x=0, y=1)
-
-menu()
-
-while True:
-     user_in = input('> ')
-     if parse_move(user_in) != None:
-          move = parse_move(user_in)
-          s1, s2, f1, f2 = move
-          print(shekel_board[s1][s2])
-          print(shekel_board[f1][f2])
-          print(is_legal_move(move, shekel_board))
-          shekel_board = move_piece(parse_move(user_in), shekel_board)
-          display_board(shekel_board)
-     else:
-          print("Try Again.")
+##shekel_board = set_board()
+##
+##display_board(shekel_board)
+##
+###display_board(shekel_board, x=0, y=0)
+###display_board(shekel_board, gridref=False)
+###display_board(shekel_board, x=2, y=2)
+###display_board(shekel_board, x=0, y=1)
+##
+##menu()
+##
+##while True:
+##     user_in = input('> ')
+##     if parse_move(user_in) != None:
+##          move = parse_move(user_in)
+##          s1, s2, f1, f2 = move
+##          print(shekel_board[s1][s2])
+##          print(shekel_board[f1][f2])
+##          print(is_legal_move(move, shekel_board))
+##          shekel_board = move_piece(parse_move(user_in), shekel_board)
+##          display_board(shekel_board)
+##     else:
+##          print("Try Again.")
