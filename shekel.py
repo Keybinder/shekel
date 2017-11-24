@@ -6,7 +6,7 @@ blank_board = [[' ' for x in range(8)] for x in range(7)]
 
 def set_board(in_board_f="boardstart.txt"):
      try:
-          
+          pass
           
 
 def parse_move(move):
