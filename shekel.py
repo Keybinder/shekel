@@ -1,6 +1,6 @@
 import re
 
-piece_to_bin_dict = {
+pbin_dict = {
      '.' : 0b000,
      'S' : 0b010,
      'W' : 0b100,
@@ -10,11 +10,15 @@ piece_to_bin_dict = {
      'x' : 0b111
 }
 
+binp_dict = {v: k for k, v in pbin_dict.items()} # stolen from stackoverflow
+
 #blank_board = [['.' for x in range(8)] for x in range(7)] #why is this needed?
+
+# TODO: Make a btuple standard
 
 # ------------------------------------------------------------------------------
 
-def set_board(in_board_f="boardstart.txt"):
+def load_board(in_board_f="boardstart.txt"): # Binary :)
      with open(in_board_f) as f:
           in_board = f.read()
      # TODO: Run basic checks on file before using it as board
@@ -23,12 +27,33 @@ def set_board(in_board_f="boardstart.txt"):
      in_board = in_board.split('\n')
      main_board = []
      for i in in_board:
-          main_board.append(list(i))
+         line_board = []
+         for j in list(i):
+             line_board.append(pbin_dict[j])
+         main_board.append(line_board)
      return main_board
 
 # ------------------------------------------------------------------------------
 
-def parse_move(usr_move):
+def save_board(btuple, title):
+    pass
+    # TODO: Check if title already exists
+    # Figure out how saving boards should even work
+
+# ------------------------------------------------------------------------------
+
+def is_capture(btuple, columns=[i for i in range(7)]):
+    for i in columns:
+        pass
+
+    # TODO: Make this function
+
+
+
+
+# ------------------------------------------------------------------------------
+
+def parse_move(usr_move): # Binary-valid :)
 
      # This function parses a move in the format that a user would provide;
      # it returns an array of four values as array references to the board if
@@ -43,18 +68,18 @@ def parse_move(usr_move):
 
      if re.match(re.compile("[a-gA-G][1-8] [a-gA-G][1-8]"), usr_move):
          move_out = []
-         usr_move = usr_move.split()
+         usr_move = usr_move.split() # Gets the two references in an array
          for i in usr_move:
               for j in list(i):
                    move_out.append(j)
-
+         # This f*cking sucks: reformatting to numbers
          for x in [0,2]:
               move_out[x] = int(ord(move_out[x].lower())) - int(ord('a'))
          for x in [1,3]:
               move_out[x] = 7 - (int(move_out[x]) - 1) # bit of a hack but works
 
          for x in [0,2]:
-              move_out[x], move_out[x+1] = move_out[x+1], move_out[x]
+              move_out[x], move_out[x+1] = move_out[x+1], move_out[x] # swap
 
          return move_out
 
@@ -63,28 +88,32 @@ def parse_move(usr_move):
 
 # ------------------------------------------------------------------------------
 
-def is_legal_move(move, board):
+#def is_legal_move(move, board): # binary :)
+def is_legal_move(btuple): # btuple is move, board, turn
      # TODO: Complete this function
-
+     move, board, turn = btuple
      s1, s2, f1, f2 = move
      legal_move = True
      start_square = board[s1][s2]
      fin_square = board[f1][f2]
-     stdpiece = start_square.lower()
+     piece_type = start_square >> 1
+     piece_colour = start_square << 2
 
-     if start_square == '.':
+     if start_square == 0b000:
           legal_move = False
-     elif turnw != start_square.isupper():
+     elif turn != piece_colour:
           legal_move = False
-     elif fin_square != '.':
+     elif fin_square != 0b000:
           legal_move = False
 
      # Check if moving square is within range of piece VVV
-     elif stdpiece == 's' and not (s2 == f2 and f1 == s1-1):
+     elif piece_type == 0b001 and not (s2 == f2 and f1 == s1-1): # shekel
           legal_move = False
-     elif stdpiece == 'w' and not (abs(f1-s1) == abs(f2-s2) == 1):
+     elif piece_type == 0b010 and not (abs(f1-s1) == abs(f2-s2) == 1): # whekel
           legal_move = False
-     elif stdpiece == 'x' and not (2 > abs(f1-s1) >= 0 and 2 > abs(f2-s2) >= 0):
+     # The following is for the fisher
+     elif piece_type == 0b011 and not (2 > abs(f1-s1) >= 0 and 2 > abs(f2-s2) >= 0):
+          # ^^^ i.e. not outside the range of 2 squares in any direction
           legal_move = False
 
      # TODO: Check if piece could be captured
@@ -92,13 +121,15 @@ def is_legal_move(move, board):
 
 # ------------------------------------------------------------------------------
 
-def move_piece(move, board): # Returns board after piece has been moved
+def move_piece(btuple): # Returns board after piece has been moved # binary :)
+     move, board, turn = btuple
      s1, s2, f1, f2 = move
      board1 = board
      if is_legal_move(move, board) == True:
           board1[f1][f2] = board[s1][s2]
           board1[s1][s2] = 0b000
-     return board1
+     # TODO: Check if piece captures another piece
+     return move, board1, turn
 
 # ------------------------------------------------------------------------------
 
