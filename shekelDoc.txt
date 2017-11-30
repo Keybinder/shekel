@@ -1,0 +1,6 @@
+Shekel Documentation
+
+Basic Information
+There are 2 different board representations that the base program deals with: 3-bit binary and characters.
+The character representation is used in saving and loading files and all other internal operations are performed with the binary pieces.
+The first two bits in the binary represent the type of piece (00 - empty square, 01 - shekel, 10 - whekel, 11 - fisher)

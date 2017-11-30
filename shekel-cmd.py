@@ -1,6 +1,6 @@
 # Shekel command-line v0.0.1
 
-import shekel
+import shekel as s
 
 def display_board(board, x=1, y=0, gridref=True, compact=False): #add colours? orientation
 
@@ -31,5 +31,5 @@ def display_board(board, x=1, y=0, gridref=True, compact=False): #add colours? o
      if compact == False:
           print('')
 
-shekel_board = shekel.set_board()
+shekel_board = s.set_board()
 display_board(shekel_board)
