@@ -96,23 +96,23 @@ def is_legal_move(btuple): # btuple is move, board, turn
      legal_move = True
      start_square = board[s1][s2]
      fin_square = board[f1][f2]
-     piece_type = start_square >> 1
-     piece_colour = start_square << 2
+     ptype = start_square >> 1
+     pcolour = start_square << 2
 
      if start_square == 0b000:
           legal_move = False
-     elif turn != piece_colour:
+     elif turn != pcolour:
           legal_move = False
      elif fin_square != 0b000:
           legal_move = False
 
      # Check if moving square is within range of piece VVV
-     elif piece_type == 0b001 and not (s2 == f2 and f1 == s1-1): # shekel
+     elif ptype == 0b001 and not (s2 == f2 and f1 == s1-1): # shekel
           legal_move = False
-     elif piece_type == 0b010 and not (abs(f1-s1) == abs(f2-s2) == 1): # whekel
+     elif ptype == 0b010 and not (abs(f1-s1) == abs(f2-s2) == 1): # whekel
           legal_move = False
      # The following is for the fisher
-     elif piece_type == 0b011 and not (2 > abs(f1-s1) >= 0 and 2 > abs(f2-s2) >= 0):
+     elif ptype == 0b011 and not (2 > abs(f1-s1) >= 0 and 2 > abs(f2-s2) >= 0):
           # ^^^ i.e. not outside the range of 2 squares in any direction
           legal_move = False
 
