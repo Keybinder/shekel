@@ -41,7 +41,8 @@ def load_board(in_board_f="boardstart.txt"): # Binary :)
          for j in list(i):
              line_board.append(constants.pbin_dict[j])
          main_board.append(line_board)
-     return main_board, turn
+     btuple = main_board, turn
+     return btuple
 
 
 # ------------------------------------------------------------------------------
@@ -53,7 +54,7 @@ def save_board(btuple, title):
 
 # ------------------------------------------------------------------------------
 
-def is_capture(btuple, columns=[i for i in range(7)]):
+def check_captures(btuple, columns=[i for i in range(7)]):
     for i in columns:
         pass
 
