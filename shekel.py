@@ -93,9 +93,9 @@ def parse_move(usr_move): # Binary-valid :)
 # ------------------------------------------------------------------------------
 
 #def is_legal_move(move, board): # binary :)
-def is_legal_move(btuple): # btuple is move, board, turn
+def is_legal_move(mtuple): # btuple is move, board, turn
      # TODO: Complete this function
-     move, board, turn = btuple
+     move, board, turn = mtuple
      s1, s2, f1, f2 = move
      legal_move = True
      start_square = board[s1][s2]
@@ -125,8 +125,8 @@ def is_legal_move(btuple): # btuple is move, board, turn
 
 # ------------------------------------------------------------------------------
 
-def move_piece(btuple): # Returns board after piece has been moved # binary :)
-     move, board, turn = btuple
+def move_piece(mtuple): # Returns board after piece has been moved # binary :)
+     move, board, turn = mtuple
      s1, s2, f1, f2 = move
      board1 = board
      if is_legal_move(move, board) == True:
