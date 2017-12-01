@@ -25,17 +25,18 @@ def load_board(in_board_f="boardstart.txt"): # Binary :)
      with open(in_board_f) as f:
           in_board = f.read()
      # TODO: Run basic checks on file before using it as board
-
-	 #
      in_board = in_board.split('\n')
      main_board = []
      constants = Constants()
+     turn = in_board[-1]
+     del in_board[-1]
      for i in in_board:
          line_board = []
          for j in list(i):
              line_board.append(constants.pbin_dict[j])
          main_board.append(line_board)
-     return main_board
+     return main_board, turn
+
 
 # ------------------------------------------------------------------------------
 

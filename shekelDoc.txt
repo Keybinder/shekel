@@ -7,7 +7,7 @@ The first two bits in the binary represent the type of piece (00 - empty square,
 
 
 
-REFERENCE FOR LATER
+REFERENCES FOR LATER
 Functions that take mtuple (i.e. move, board, turn) as any one parameter:
   is_legal_move
   move_piece
@@ -17,3 +17,9 @@ Functions that take btuple (i.e board, turn) as any one parameter:
 Functions that take neither:
   parse_move
   load_board
+
+turn is "white" if white's turn, "black" if black's turn
+
+Any board load files should be comprised of 9 lines
+first 8 should be 7 characters long
+last line should contain either 'white' or 'black'
