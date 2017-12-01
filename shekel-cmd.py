@@ -4,8 +4,8 @@ import shekel as s
 
 constants = s.Constants()
 
-def display_board(board, x=1, y=0, gridref=True, compact=False): #add colours? orientation
-
+def display_board(btuple, x=1, y=0, gridref=True, compact=False): #add colours? orientation
+     board, turn = btuple
      gridnums = [i for i in range(8,0,-1)]
      gridletters = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
 
@@ -14,7 +14,6 @@ def display_board(board, x=1, y=0, gridref=True, compact=False): #add colours? o
                line = str(gridnums[i]) + "|"
           elif gridref == False:
                line = ""
-
           for j in board[i]:
                line = line + (x * ' ') + constants.binp_dict[j]
           if gridref == False or y == 0:
@@ -34,5 +33,6 @@ def display_board(board, x=1, y=0, gridref=True, compact=False): #add colours? o
      if compact == False:
           print('')
 
-shekel_board = s.load_board()
-display_board(shekel_board)
+bboard = s.load_board()
+display_board(bboard)
+print(bboard)

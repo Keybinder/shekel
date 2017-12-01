@@ -12,14 +12,15 @@ class Constants(): # put any reference values here
              'x' : 0b111
         }
 
-        self.binp_dict = {v: k for k, v in pbin_dict.items()}
+        self.binp_dict = {v: k for k, v in self.pbin_dict.items()}
         # stolen from stackoverflow
 
 #blank_board = [['.' for x in range(8)] for x in range(7)] #why is this needed?
 
 # TODO: Make a btuple standard
+# TODO: Make a scoring system
 
-# ------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 
 def load_board(in_board_f="boardstart.txt"): # Binary :)
      with open(in_board_f) as f:
