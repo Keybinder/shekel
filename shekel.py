@@ -15,18 +15,6 @@ class Constants(): # put any reference values here
         self.binp_dict = {v: k for k, v in pbin_dict.items()}
         # stolen from stackoverflow
 
-pbin_dict = {
-     '.' : 0b000,
-     'S' : 0b010,
-     'W' : 0b100,
-     'X' : 0b110,
-     's' : 0b011,
-     'w' : 0b101,
-     'x' : 0b111
-}
-
-binp_dict = {v: k for k, v in pbin_dict.items()} # stolen from stackoverflow
-
 #blank_board = [['.' for x in range(8)] for x in range(7)] #why is this needed?
 
 # TODO: Make a btuple standard
@@ -41,10 +29,11 @@ def load_board(in_board_f="boardstart.txt"): # Binary :)
 	 #
      in_board = in_board.split('\n')
      main_board = []
+     constants = Constants()
      for i in in_board:
          line_board = []
          for j in list(i):
-             line_board.append(pbin_dict[j])
+             line_board.append(constants.pbin_dict[j])
          main_board.append(line_board)
      return main_board
 
