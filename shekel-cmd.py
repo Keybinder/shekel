@@ -4,6 +4,19 @@ import shekel as s
 
 constants = s.Constants()
 
+startupmsg = """Shekel v0.0.1 alpha
+Written by Jonah Hopkin, Licensed under <license> 2017
+Type 'help' for help or 'newgame' to start a new game.
+"""
+
+command_dict = {
+    'help':'help()',
+    'newgame':'newgame()',
+    'move':'',
+    'options':'',
+
+}
+
 def display_board(btuple, x=1, y=0, gridref=True, compact=False): #add colours? orientation
      board, turn = btuple
      gridnums = [i for i in range(8,0,-1)]
@@ -33,6 +46,11 @@ def display_board(btuple, x=1, y=0, gridref=True, compact=False): #add colours? 
      if compact == False:
           print('')
 
+def menu():
+    print(startupmsg)
+    user_in = input('> ').strip()
+    tokens = user_in.split()
+
+
 bboard = s.load_board()
 display_board(bboard)
-print(bboard)

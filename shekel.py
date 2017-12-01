@@ -20,11 +20,16 @@ class Constants(): # put any reference values here
 # TODO: Make a btuple standard
 # TODO: Make a scoring system
 
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 def load_board(in_board_f="boardstart.txt"): # Binary :)
-     with open(in_board_f) as f:
-          in_board = f.read()
+     try:
+         with open(in_board_f) as f:
+             in_board = f.read()
+     except FileNotFoundError:
+         raise Exception("File not found when loading board.")
+     except PermissionError:
+         raise Exception("Permissions invalid; board not loaded.")
      # TODO: Run basic checks on file before using it as board
      in_board = in_board.split('\n')
      main_board = []
@@ -124,6 +129,12 @@ def is_legal_move(mtuple): # btuple is move, board, turn
 
      # TODO: Check if piece could be captured
      return legal_move
+
+# ------------------------------------------------------------------------------
+
+def self_test():
+    # TODO: Make this function
+    pass
 
 # ------------------------------------------------------------------------------
 
