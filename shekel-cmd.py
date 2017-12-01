@@ -2,27 +2,30 @@
 
 import shekel as s
 
+constants = s.Constants()
+
 def display_board(board, x=1, y=0, gridref=True, compact=False): #add colours? orientation
 
      gridnums = [i for i in range(8,0,-1)]
      gridletters = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
-     
+
      for i in range(8):
           if gridref == True:
                line = str(gridnums[i]) + "|"
           elif gridref == False:
                line = ""
-          
+
           for j in board[i]:
-               line = line + (x * ' ') + j
+               line = line + (x * ' ') + constants.binp_dict[j]
           if gridref == False or y == 0:
                print(line + (y * '\n'))
           else:
                print(line + (y * '\n |'))
                # pretty sure this shouldn't work but it does
-          
+
      if gridref == True:
-          print((" +") + ('-' * (7 + 7 * x)))
+          print((" +") + ('-' * (7 + 7 * x))) # these are display characters
+          # don't freak out, this isn't eldritch maths
           lastline = "  "
           for i in gridletters:
                lastline = lastline + (x * ' ') + i
@@ -31,5 +34,5 @@ def display_board(board, x=1, y=0, gridref=True, compact=False): #add colours? o
      if compact == False:
           print('')
 
-shekel_board = s.set_board()
+shekel_board = s.load_board()
 display_board(shekel_board)

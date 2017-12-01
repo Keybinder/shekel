@@ -1,5 +1,20 @@
 import re
 
+class Constants(): # put any reference values here
+    def __init__(self):
+        self.pbin_dict = {
+             '.' : 0b000,
+             'S' : 0b010,
+             'W' : 0b100,
+             'X' : 0b110,
+             's' : 0b011,
+             'w' : 0b101,
+             'x' : 0b111
+        }
+
+        self.binp_dict = {v: k for k, v in pbin_dict.items()}
+        # stolen from stackoverflow
+
 pbin_dict = {
      '.' : 0b000,
      'S' : 0b010,
