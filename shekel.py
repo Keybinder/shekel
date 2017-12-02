@@ -87,7 +87,14 @@ def check_captures(btuple, columns=[i for i in range(7)]):
                     pblocks.append(pblock)
 
         for block in pblocks:
-
+            if len(block) >= 2:
+                for j in range(len(block) - 1):
+                    # Standard shekel capture
+                    if block[j][1] > block[j+1][1]:
+                        # TODO: Get square affected by this and add to check_captures
+                    elif block[j][i] < block[j+1][1]:
+                        # See TODO above
+                    # TODO: Implement 'saucy' shekel capture
 
     # TODO: Make this function
 
