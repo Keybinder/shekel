@@ -18,7 +18,8 @@ Functions that take neither:
   parse_move
   load_board
 
-turn is "white" if white's turn, "black" if black's turn
+turn is 0 if white's turn, 1 if black's turn
+similarly, colour is 0 if white, 1 if black
 
 Any board load files should be comprised of 9 lines
 first 8 should be 7 characters long

@@ -55,8 +55,39 @@ def save_board(btuple, title):
 # ------------------------------------------------------------------------------
 
 def check_captures(btuple, columns=[i for i in range(7)]):
+    board, turn = btuple
+    captures = []
     for i in columns:
-        pass
+        vcol = [board[j][i] for j in range(8)]
+        print(vcol)
+        pblocks = []
+        pblock = []
+        psubblock = [0, 0] # colour, times repeated
+        for x in range(8):
+            piece = vcol[x]
+            pcolour = piece % 2 # one of the advantages of the binary pieces
+            is_blank = (piece >> 1 == 0b000)
+            if is_blank and psubblock[1] != 0:
+                pblock.append(psubblock)
+                pblocks.append(pblock)
+                pblock = []
+                psubblock = [0, 0]
+            elif is_blank and psubblock[1] == 0:
+                pass # because sequences of blank squares should not be counted
+            elif not is_blank:
+                if psubblock[0] == pcolour:
+                    psubblock[1] += 1
+                elif psubblock[1] != 0: # previous square had diff colour
+                    pblock.append(psubblock)
+                    psubblock = [pcolour, 1]
+                else: # previous square was blank
+                    psubblock = [pcolour, 1]
+                if x == 7: # check if final line
+                    pblock.append(psubblock)
+                    pblocks.append(pblock)
+
+        for block in pblocks:
+
 
     # TODO: Make this function
 
@@ -109,7 +140,7 @@ def is_legal_move(mtuple): # btuple is move, board, turn
      start_square = board[s1][s2]
      fin_square = board[f1][f2]
      ptype = start_square >> 1
-     pcolour = start_square << 2
+     pcolour = start_square % 2
 
      if start_square == 0b000:
           legal_move = False

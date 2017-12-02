@@ -54,3 +54,4 @@ def menu():
 
 bboard = s.load_board()
 display_board(bboard)
+s.check_captures(bboard)
