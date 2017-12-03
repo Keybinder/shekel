@@ -25,13 +25,15 @@ class Board():
     def force_move(self, move):
         s1, s2, f1, f2 = move
         self.board[f1][f2] = self.board[s1][s2]
-        self.board[s1][s2] = 0b000
+        self.board[s1][s2] = 0
     def move(self, move):
         s1, s2, f1, f2 = move
-        #if is_legal_move(self, move):
-        self.board[f1][f2] = self.board[s1][s2]
-        #self.board[s1][s2] = 0b000
-        #captures = check_captures(self, columns=[s2,f2])
+        if is_legal_move(self, move):
+            self.board[f1][f2] = self.board[s1][s2]
+            self.board[s1][s2] = 0
+        else:
+            print("That's an illegal move.")
+        captures = check_captures(self, columns=[s2,f2])
 
 
 # TODO: Make sure to keep Board objects standardised
@@ -109,7 +111,6 @@ def check_captures(bobject, columns=[i for i in range(7)]):
         for block in pblocks:
             for j in range(len(block) - 1):
                 # Standard shekel capture
-                print(block)
                 if block[j][1] > block[j+1][1]: # Standard capture 1
                     captures.append([block[j+1][2], i])
                 if block[j][1] < block[j+1][1]: # Standard capture 2
@@ -196,9 +197,10 @@ def is_legal_move(bobject, move): # btuple is move, board, turn
      tempboard = Board(board, turn)
      tempboard.force_move(move)
      possible_captures = check_captures(tempboard, [f2])
-     if fin_square in possible_captures:
+     if [f1, f2] in possible_captures:
          legal_move = False
-
+     reverse_move = f1, f2, s1, s2
+     tempboard.force_move(reverse_move) # This is terrible but fixes issue
      return legal_move
 
 # ------------------------------------------------------------------------------

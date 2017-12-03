@@ -61,10 +61,8 @@ while True:
      if s.parse_move(user_in) != None:
           move = s.parse_move(user_in)
           s1, s2, f1, f2 = move
-          print(bobject.board[s1][s2])
-          print(bobject.board[f1][f2])
           print(s.is_legal_move(bobject, move))
-          bobject.force_move(move)
+          bobject.move(move)
           display_board(bobject)
           print(s.check_captures(bobject))
      else:
