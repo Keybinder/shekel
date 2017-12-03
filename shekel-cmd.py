@@ -17,8 +17,8 @@ command_dict = {
 
 }
 
-def display_board(btuple, x=1, y=0, gridref=True, compact=False): #add colours? orientation
-     board, turn = btuple
+def display_board(bobject, x=1, y=0, gridref=True, compact=False): #add colours? orientation
+     board, turn = bobject.board, bobject.turn
      gridnums = [i for i in range(8,0,-1)]
      gridletters = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
 

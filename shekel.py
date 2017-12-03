@@ -17,6 +17,15 @@ class Constants(): # put any reference values here
 
 #blank_board = [['.' for x in range(8)] for x in range(7)] #why is this needed?
 
+class Board():
+    def __init__(self, board, turn):
+        self.board = board
+        self.turn = turn
+    def force_move(self, move):
+        s1, s2, f1, f2 = move
+        self.board[f1][f2] = self.board[s1][s2]
+        self.board[s1][s2] = 0b000
+
 # TODO: Make a btuple standard
 # TODO: Make a scoring system
 
@@ -41,28 +50,28 @@ def load_board(in_board_f="boardstart.txt"): # Binary :)
          for j in list(i):
              line_board.append(constants.pbin_dict[j])
          main_board.append(line_board)
-     btuple = main_board, turn
-     return btuple
+     bobject = Board(main_board, turn)
+     return bobject
 
 
 # ------------------------------------------------------------------------------
 
-def save_board(btuple, title):
+def save_board(bobject, title):
     pass
     # TODO: Check if title already exists
     # Figure out how saving boards should even work
 
 # ------------------------------------------------------------------------------
 
-def check_captures(btuple, columns=[i for i in range(7)]):
-    board, turn = btuple
+def check_captures(bobject, columns=[i for i in range(7)]):
+    board, turn = bobject.board, bobject.turn
     captures = []
     for i in columns:
         vcol = [board[j][i] for j in range(8)]
         print(vcol)
         pblocks = []
         pblock = []
-        psubblock = [0, 0] # colour, times repeated
+        psubblock = [0, 0, 0] # colour, times repeated
         for x in range(8):
             piece = vcol[x]
             pcolour = piece % 2 # one of the advantages of the binary pieces
@@ -71,7 +80,7 @@ def check_captures(btuple, columns=[i for i in range(7)]):
                 pblock.append(psubblock)
                 pblocks.append(pblock)
                 pblock = []
-                psubblock = [0, 0]
+                psubblock = [0, 0, 0] # colour, xrepeated, first instance(xcoord)
             elif is_blank and psubblock[1] == 0:
                 pass # because sequences of blank squares should not be counted
             elif not is_blank:
@@ -79,22 +88,30 @@ def check_captures(btuple, columns=[i for i in range(7)]):
                     psubblock[1] += 1
                 elif psubblock[1] != 0: # previous square had diff colour
                     pblock.append(psubblock)
-                    psubblock = [pcolour, 1]
+                    psubblock = [pcolour, 1, x]
                 else: # previous square was blank
-                    psubblock = [pcolour, 1]
+                    psubblock = [pcolour, 1, x]
+                    print("else happened")
                 if x == 7: # check if final line
                     pblock.append(psubblock)
                     pblocks.append(pblock)
+            print(psubblock)
+            print(x)
+        print(pblocks)
+
+        # holy indentation, batman
 
         for block in pblocks:
-            if len(block) >= 2:
-                for j in range(len(block) - 1):
-                    # Standard shekel capture
-                    if block[j][1] > block[j+1][1]:
-                        # TODO: Get square affected by this and add to check_captures
-                    elif block[j][i] < block[j+1][1]:
-                        # See TODO above
-                    # TODO: Implement 'saucy' shekel capture
+            for j in range(len(block) - 1):
+                # Standard shekel capture
+                if block[j][1] > block[j+1][1]:
+                    # TODO: Add the first square of the second block to captures
+                    x = block[j+1][2]
+                    captures.append(board[x][i])
+                elif block[j][i] < block[j+1][1]:
+                    pass
+                    # See TODO above
+                # TODO: Implement 'saucy' shekel capture
 
     # TODO: Make this function
 
