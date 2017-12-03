@@ -52,6 +52,19 @@ def menu():
     tokens = user_in.split()
 
 
-bboard = s.load_board()
-display_board(bboard)
-s.check_captures(bboard)
+bobject = s.load_board()
+display_board(bobject)
+s.check_captures(bobject)
+
+while True:
+     user_in = input('> ')
+     if s.parse_move(user_in) != None:
+          move = s.parse_move(user_in)
+          s1, s2, f1, f2 = move
+          print(bobject.board[s1][s2])
+          print(bobject.board[f1][f2])
+          print(s.is_legal_move(bobject, move))
+          bobject.move(move)
+          display_board(bobject)
+     else:
+          print("Try Again.")
