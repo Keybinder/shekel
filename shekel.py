@@ -108,15 +108,19 @@ def check_captures(bobject, columns=[i for i in range(7)]):
         for block in pblocks:
             for j in range(len(block) - 1):
                 # Standard shekel capture
-                if block[j][1] > block[j+1][1]:
-                    x = (block[j+1][2])
-                    captures.append([x, i])
-                elif block[j][i] < block[j+1][1]:
-                    x = (block[j][3])
-                    captures.append([x, i])
-                # TODO: Implement 'saucy' shekel capture
+                print(block)
+                if block[j][1] > block[j+1][1]: # Standard capture 1
+                    captures.append([block[j+1][2], i])
+                if block[j][1] < block[j+1][1]: # Standard capture 2
+                    captures.append([block[j][3], i])
+                if len(block) >= 3 and j < len(block) - 2: # Saucy shekel
+                    # NOTE: Future me, the line above might be the problem 
+                    if block[j+1][1] == 1:
+                        captures.append([block[j+1][2], i])
+                    # This is maybe fixed
 
-    print(captures)
+    return captures
+
     # TODO: Make this function
 
 
@@ -188,7 +192,6 @@ def is_legal_move(bobject, move): # btuple is move, board, turn
           legal_move = False
 
      # TODO: Check if piece could be captured
-     elif
      return legal_move
 
 # ------------------------------------------------------------------------------

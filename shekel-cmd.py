@@ -66,5 +66,6 @@ while True:
           print(s.is_legal_move(bobject, move))
           bobject.move(move)
           display_board(bobject)
+          print(s.check_captures(bobject))
      else:
           print("Try Again.")
