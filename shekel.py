@@ -1,4 +1,5 @@
 import re
+import copy
 
 class Constants(): # put any reference values here
     def __init__(self):
@@ -17,7 +18,25 @@ class Constants(): # put any reference values here
 
 #blank_board = [['.' for x in range(8)] for x in range(7)] #why is this needed?
 
-# TODO: Make a btuple standard
+class Board():
+    def __init__(self, board, turn):
+        self.board = board
+        self.turn = turn
+    def force_move(self, move):
+        s1, s2, f1, f2 = move
+        self.board[f1][f2] = self.board[s1][s2]
+        self.board[s1][s2] = 0
+    def move(self, move):
+        s1, s2, f1, f2 = move
+        if is_legal_move(self, move):
+            self.board[f1][f2] = self.board[s1][s2]
+            self.board[s1][s2] = 0
+        else:
+            print("That's an illegal move.")
+        captures = check_captures(self, columns=[s2,f2])
+
+
+# TODO: Make sure to keep Board objects standardised
 # TODO: Make a scoring system
 
 # ------------------------------------------------------------------------------
@@ -30,71 +49,79 @@ def load_board(in_board_f="boardstart.txt"): # Binary :)
          raise Exception("File not found when loading board.")
      except PermissionError:
          raise Exception("Permissions invalid; board not loaded.")
-     # TODO: Run basic checks on file before using it as board
+     # TODO: Add extra verification
      in_board = in_board.split('\n')
      main_board = []
      constants = Constants()
-     turn = in_board[-1]
+     turn = int(in_board[-1])
      del in_board[-1]
      for i in in_board:
          line_board = []
          for j in list(i):
              line_board.append(constants.pbin_dict[j])
          main_board.append(line_board)
-     btuple = main_board, turn
-     return btuple
+     bobject = Board(main_board, turn)
+     return bobject
 
 
 # ------------------------------------------------------------------------------
 
-def save_board(btuple, title):
+def save_board(bobject, title):
     pass
     # TODO: Check if title already exists
     # Figure out how saving boards should even work
 
 # ------------------------------------------------------------------------------
 
-def check_captures(btuple, columns=[i for i in range(7)]):
-    board, turn = btuple
+def check_captures(bobject, columns=[i for i in range(7)]):
+    board, turn = bobject.board, bobject.turn
     captures = []
     for i in columns:
         vcol = [board[j][i] for j in range(8)]
-        print(vcol)
         pblocks = []
         pblock = []
-        psubblock = [0, 0] # colour, times repeated
+        psubblock = [0, 0, 0, 0] # colour, times repeated, first square with colour, last square with colour
         for x in range(8):
             piece = vcol[x]
             pcolour = piece % 2 # one of the advantages of the binary pieces
             is_blank = (piece >> 1 == 0b000)
             if is_blank and psubblock[1] != 0:
+                psubblock[3] = x-1
                 pblock.append(psubblock)
                 pblocks.append(pblock)
                 pblock = []
-                psubblock = [0, 0]
+                psubblock = [0, 0, 0, 0] # colour, xrepeated, first instance(xcoord)
             elif is_blank and psubblock[1] == 0:
                 pass # because sequences of blank squares should not be counted
             elif not is_blank:
-                if psubblock[0] == pcolour:
+                if psubblock[0] == pcolour and psubblock[1] != 0:
                     psubblock[1] += 1
                 elif psubblock[1] != 0: # previous square had diff colour
+                    psubblock[3] = x-1
                     pblock.append(psubblock)
-                    psubblock = [pcolour, 1]
+                    psubblock = [pcolour, 1, x, x]
                 else: # previous square was blank
-                    psubblock = [pcolour, 1]
+                    psubblock = [pcolour, 1, x, x]
                 if x == 7: # check if final line
+                    psubblock[3] = x
                     pblock.append(psubblock)
                     pblocks.append(pblock)
 
+        # holy indentation, batman
         for block in pblocks:
-            if len(block) >= 2:
-                for j in range(len(block) - 1):
-                    # Standard shekel capture
-                    if block[j][1] > block[j+1][1]:
-                        # TODO: Get square affected by this and add to check_captures
-                    elif block[j][i] < block[j+1][1]:
-                        # See TODO above
-                    # TODO: Implement 'saucy' shekel capture
+            for j in range(len(block) - 1):
+                # Standard shekel capture
+                if block[j][1] > block[j+1][1]: # Standard capture 1
+                    captures.append([block[j+1][2], i])
+                if block[j][1] < block[j+1][1]: # Standard capture 2
+                    captures.append([block[j][3], i])
+                if len(block) >= 3 and j < len(block) - 2: # Saucy shekel
+                    # NOTE: Future me, the line above might be the problem
+                    if block[j+1][1] == 1:
+                        captures.append([block[j+1][2], i])
+                    # This is maybe fixed
+
+    return captures
 
     # TODO: Make this function
 
@@ -139,9 +166,9 @@ def parse_move(usr_move): # Binary-valid :)
 # ------------------------------------------------------------------------------
 
 #def is_legal_move(move, board): # binary :)
-def is_legal_move(mtuple): # btuple is move, board, turn
+def is_legal_move(bobject, move): # btuple is move, board, turn
      # TODO: Complete this function
-     move, board, turn = mtuple
+     board, turn = bobject.board, bobject.turn
      s1, s2, f1, f2 = move
      legal_move = True
      start_square = board[s1][s2]
@@ -167,6 +194,13 @@ def is_legal_move(mtuple): # btuple is move, board, turn
           legal_move = False
 
      # TODO: Check if piece could be captured
+     tempboard = Board(board, turn)
+     tempboard.force_move(move)
+     possible_captures = check_captures(tempboard, [f2])
+     if [f1, f2] in possible_captures:
+         legal_move = False
+     reverse_move = f1, f2, s1, s2
+     tempboard.force_move(reverse_move) # This is terrible but fixes issue
      return legal_move
 
 # ------------------------------------------------------------------------------
@@ -174,18 +208,6 @@ def is_legal_move(mtuple): # btuple is move, board, turn
 def self_test():
     # TODO: Make this function
     pass
-
-# ------------------------------------------------------------------------------
-
-def move_piece(mtuple): # Returns board after piece has been moved # binary :)
-     move, board, turn = mtuple
-     s1, s2, f1, f2 = move
-     board1 = board
-     if is_legal_move(move, board) == True:
-          board1[f1][f2] = board[s1][s2]
-          board1[s1][s2] = 0b000
-     # TODO: Check if piece captures another piece
-     return move, board1, turn
 
 # ------------------------------------------------------------------------------
 
