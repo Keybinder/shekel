@@ -24,7 +24,7 @@ class Board():
         self.turn = turn
     def force_move(self, move):
         s1, s2, f1, f2 = move
-        self.board[f1][f2] = copy.deepcopy(self.board[s1][s2])
+        self.board[f1][f2] = self.board[s1][s2]
         self.board[s1][s2] = 0b000
     def move(self, move):
         s1, s2, f1, f2 = move
