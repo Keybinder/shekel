@@ -64,7 +64,7 @@ while True:
           print(bobject.board[s1][s2])
           print(bobject.board[f1][f2])
           print(s.is_legal_move(bobject, move))
-          bobject.move(move)
+          bobject.force_move(move)
           display_board(bobject)
           print(s.check_captures(bobject))
      else:

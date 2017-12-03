@@ -1,4 +1,5 @@
 import re
+import copy
 
 class Constants(): # put any reference values here
     def __init__(self):
@@ -23,14 +24,14 @@ class Board():
         self.turn = turn
     def force_move(self, move):
         s1, s2, f1, f2 = move
-        self.board[f1][f2] = self.board[s1][s2]
+        self.board[f1][f2] = copy.deepcopy(self.board[s1][s2])
         self.board[s1][s2] = 0b000
     def move(self, move):
         s1, s2, f1, f2 = move
-        if is_legal_move(self, move):
-            self.board[f1][f2] = self.board[s1][s2]
-            self.board[s1][s2] = 0b000
-        captures = check_captures(self, columns=[s2,f2])
+        #if is_legal_move(self, move):
+        self.board[f1][f2] = self.board[s1][s2]
+        #self.board[s1][s2] = 0b000
+        #captures = check_captures(self, columns=[s2,f2])
 
 
 # TODO: Make sure to keep Board objects standardised
@@ -114,7 +115,7 @@ def check_captures(bobject, columns=[i for i in range(7)]):
                 if block[j][1] < block[j+1][1]: # Standard capture 2
                     captures.append([block[j][3], i])
                 if len(block) >= 3 and j < len(block) - 2: # Saucy shekel
-                    # NOTE: Future me, the line above might be the problem 
+                    # NOTE: Future me, the line above might be the problem
                     if block[j+1][1] == 1:
                         captures.append([block[j+1][2], i])
                     # This is maybe fixed
@@ -192,6 +193,12 @@ def is_legal_move(bobject, move): # btuple is move, board, turn
           legal_move = False
 
      # TODO: Check if piece could be captured
+     tempboard = Board(board, turn)
+     tempboard.force_move(move)
+     possible_captures = check_captures(tempboard, [f2])
+     if fin_square in possible_captures:
+         legal_move = False
+
      return legal_move
 
 # ------------------------------------------------------------------------------
