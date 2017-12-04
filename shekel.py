@@ -1,5 +1,4 @@
 import re
-import copy
 
 class Constants(): # put any reference values here
     def __init__(self):
@@ -165,7 +164,6 @@ def parse_move(usr_move): # Binary-valid :)
 
 # ------------------------------------------------------------------------------
 
-#def is_legal_move(move, board): # binary :)
 def is_legal_move(bobject, move): # btuple is move, board, turn
      # TODO: Complete this function
      board, turn = bobject.board, bobject.turn
