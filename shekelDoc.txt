@@ -23,4 +23,4 @@ similarly, colour is 0 if white, 1 if black
 
 Any board load files should be comprised of 9 lines
 first 8 should be 7 characters long
-last line should contain either 'white' or 'black'
+last line should contain either 0 or 1 to represent the turn
