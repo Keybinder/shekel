@@ -90,7 +90,7 @@ def check_captures(bobject, columns=[i for i in range(7)]):
                 pblock.append(psubblock)
                 pblocks.append(pblock)
                 pblock = []
-                psubblock = [0, 0, 0, 0] # colour, xrepeated, first instance(xcoord)
+                psubblock = [0, 0, 0, 0]
             elif is_blank and psubblock[1] == 0:
                 pass # because sequences of blank squares should not be counted
             elif not is_blank:
@@ -208,30 +208,3 @@ def is_legal_move(bobject, move): # btuple is move, board, turn
 def self_test():
     # TODO: Make this function
     pass
-
-# ------------------------------------------------------------------------------
-
-# Testing below
-##shekel_board = set_board()
-##
-##display_board(shekel_board)
-##
-###display_board(shekel_board, x=0, y=0)
-###display_board(shekel_board, gridref=False)
-###display_board(shekel_board, x=2, y=2)
-###display_board(shekel_board, x=0, y=1)
-##
-##menu()
-##
-##while True:
-##     user_in = input('> ')
-##     if parse_move(user_in) != None:
-##          move = parse_move(user_in)
-##          s1, s2, f1, f2 = move
-##          print(shekel_board[s1][s2])
-##          print(shekel_board[f1][f2])
-##          print(is_legal_move(move, shekel_board))
-##          shekel_board = move_piece(parse_move(user_in), shekel_board)
-##          display_board(shekel_board)
-##     else:
-##          print("Try Again.")
