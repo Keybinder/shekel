@@ -191,14 +191,14 @@ def is_legal_move(bobject, move): # btuple is move, board, turn
           # ^^^ i.e. not outside the range of 2 squares in any direction
           legal_move = False
 
-     # TODO: Check if piece could be captured
-     tempboard = Board(board, turn)
-     tempboard.force_move(move)
-     possible_captures = check_captures(tempboard, [f2])
-     if [f1, f2] in possible_captures:
-         legal_move = False
-     reverse_move = f1, f2, s1, s2
-     tempboard.force_move(reverse_move) # This is terrible but fixes issue
+     # in case suicides become illegal again
+#    tempboard = Board(board, turn) # TODO: try fixing by deepcopying parameters
+#    tempboard.force_move(move)
+#    possible_captures = check_captures(tempboard, [f2])
+#    if [f1, f2] in possible_captures:
+#        legal_move = False
+#    reverse_move = f1, f2, s1, s2
+#    tempboard.force_move(reverse_move) # This is terrible but fixes issue
      return legal_move
 
 # ------------------------------------------------------------------------------
