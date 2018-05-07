@@ -24,3 +24,22 @@ similarly, colour is 0 if white, 1 if black
 Any board load files should be comprised of 9 lines
 first 8 should be 7 characters long
 last line should contain either 0 or 1 to represent the turn
+
+== Provisional Documentation for shekel.py Below ==
+
+CLASSES
+
+* Constants()
+This is just a container for any constants that need to be referenced throughout the program. This includes:
+  - pbin_dict [dict] - a dictionary that gives the 3-bit binary value of an ASCII piece representation
+  - binp_dict [dict] - a dictionary that gives the ASCII piece representation of a 3-bit binary value
+  
+* Board(board, turn)
+This is a full internal representation for a board, which includes both methods and variables. The parameter 'board' is a 2D list: a list
+of column lists. It should have a length of 7 and each column list should be 8 ASCII piece representation characters in a list. For
+example, the piece in the 3rd row on the 2nd column should be referenced as board[2][3]. The turn is simply a 0 or 1 in int form.
+*** LISTS OF CAPTURED PIECES AND SEVERAL OTHER IMPORTANT VARIABLES MUST BE ADDED TO THE INIT METHOD, SO THIS DOCUMENTATION SHOULD BE UPDATED TO REFLECT THIS.
+Methods:
+  - self.move() - TODO
+  
+TODO
