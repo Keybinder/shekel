@@ -27,11 +27,16 @@ class Board():
         self.board[s1][s2] = 0
     def move(self, move):
         s1, s2, f1, f2 = move
-        if is_legal_move(self, move):
+        legality, error_msg = is_legal_move(self, move)
+        if legality:
             self.board[f1][f2] = self.board[s1][s2]
             self.board[s1][s2] = 0
+            return error_msg
         else:
+            return error_msg
             print("That's an illegal move.")
+            print("Reason: " + error_msg)
+
         captures = check_captures(self, columns=[s2,f2])
 
 
@@ -110,6 +115,8 @@ def check_captures(bobject, columns=[i for i in range(7)]):
         for block in pblocks:
             for j in range(len(block) - 1):
                 # Standard shekel capture
+                #if len(block) == 2 and max(m
+
                 if block[j][1] > block[j+1][1]: # Standard capture 1
                     captures.append([block[j+1][2], i])
                 if block[j][1] < block[j+1][1]: # Standard capture 2
@@ -173,23 +180,24 @@ def is_legal_move(bobject, move): # btuple is move, board, turn
      fin_square = board[f1][f2]
      ptype = start_square >> 1
      pcolour = start_square % 2
-
+     error_msg = None
+                                           
      if start_square == 0b000:
-          legal_move = False
+          error_msg = "No piece on square moved"
      elif turn != pcolour:
-          legal_move = False
+          error_msg = "Piece owned by opposing player"
      elif fin_square != 0b000:
-          legal_move = False
+          error_msg = "Moving space occupied"
 
      # Check if moving square is within range of piece VVV
      elif ptype == 0b001 and not (s2 == f2 and f1 == s1-1): # shekel
-          legal_move = False
+          error_msg = "Out of range (shekel)"
      elif ptype == 0b010 and not (abs(f1-s1) == abs(f2-s2) == 1): # whekel
-          legal_move = False
+          error_msg = "Out of range (whekel)"
      # The following is for the fisher
      elif ptype == 0b011 and not (2 > abs(f1-s1) >= 0 and 2 > abs(f2-s2) >= 0):
           # ^^^ i.e. not outside the range of 2 squares in any direction
-          legal_move = False
+          error_msg = "Out of range (fisher)"
 
      # in case suicides become illegal again
 #    tempboard = Board(board, turn) # TODO: try fixing by deepcopying parameters
@@ -199,7 +207,12 @@ def is_legal_move(bobject, move): # btuple is move, board, turn
 #        legal_move = False
 #    reverse_move = f1, f2, s1, s2
 #    tempboard.force_move(reverse_move) # This is terrible but fixes issue
-     return legal_move
+
+     if error_msg != None:
+         return False, error_msg
+     else:
+         return True, None
+     # returns is_legal_move, error_msg
 
 # ------------------------------------------------------------------------------
 
