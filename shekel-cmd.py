@@ -1,4 +1,4 @@
-# Shekel command-line v0.0.1
+# Shekel command-line v0.0.2
 
 import shekel as s
 
@@ -61,8 +61,11 @@ while True:
      if s.parse_move(user_in) != None:
           move = s.parse_move(user_in)
           s1, s2, f1, f2 = move
-          print(s.is_legal_move(bobject, move))
-          bobject.move(move)
+          #print(s.is_legal_move(bobject, move))
+          error_msg = bobject.move(move)
+          if error_msg != None:
+               print("Illegal move.")
+               print("Reason: " + error_msg)
           display_board(bobject)
           print(s.check_captures(bobject))
      else:
