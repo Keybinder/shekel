@@ -18,9 +18,10 @@ class Constants(): # put any reference values here
 #blank_board = [['.' for x in range(8)] for x in range(7)] #why is this needed?
 
 class Board():
-    def __init__(self, board, turn):
+    def __init__(self, board, turn=0, score=[0,0]):
         self.board = board
         self.turn = turn
+        self.score = score
     def force_move(self, move):
         s1, s2, f1, f2 = move
         self.board[f1][f2] = self.board[s1][s2]
