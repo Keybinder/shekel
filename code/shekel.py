@@ -1,4 +1,5 @@
 import re
+import pickle
 
 class Constants(): # put any reference values here
     def __init__(self):
@@ -42,7 +43,7 @@ class Board():
 
 
 # TODO: Make sure to keep Board objects standardised
-# TODO: Make a scoring system
+# TODO: Make a scoring check (when shekels reach the end)
 
 # ------------------------------------------------------------------------------
 
@@ -67,14 +68,16 @@ def load_board(in_board_f="boardstart.txt"): # Binary :)
          main_board.append(line_board)
      bobject = Board(main_board, turn)
      return bobject
+    # TODO: Replace this with a pickle method
 
 
 # ------------------------------------------------------------------------------
 
 def save_board(bobject, title):
-    pass
+    saving_file = open("saves/" + title + ".pkl", 'w')
+    pickle.dump(bobject, saving_file)
     # TODO: Check if title already exists
-    # Figure out how saving boards should even work
+    # TODO: Test this in practice
 
 # ------------------------------------------------------------------------------
 
