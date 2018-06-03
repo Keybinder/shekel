@@ -47,7 +47,7 @@ class Board():
 
 # ------------------------------------------------------------------------------
 
-def load_board(in_board_f="boardstart.txt"): # Binary :)
+def load_board(in_board_f="saves/default.txt"): # Binary :)
      try:
          with open(in_board_f) as f:
              in_board = f.read()
