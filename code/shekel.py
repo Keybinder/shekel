@@ -47,7 +47,7 @@ class Board():
 
 # ------------------------------------------------------------------------------
 
-def load_board(in_board_f="boardstart.txt"): # Binary :)
+def load_board(in_board_f="saves/default.txt"): # Binary :)
      try:
          with open(in_board_f) as f:
              in_board = f.read()
@@ -59,6 +59,7 @@ def load_board(in_board_f="boardstart.txt"): # Binary :)
      in_board = in_board.split('\n')
      main_board = []
      constants = Constants()
+     del in_board[-1]
      turn = int(in_board[-1])
      del in_board[-1]
      for i in in_board:

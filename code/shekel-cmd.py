@@ -17,11 +17,12 @@ command_dict = {
 
 }
 
-def display_board(bobject, x=1, y=0, gridref=True, compact=False): #add colours? orientation
+def gen_display(bobject, x=1, y=0, gridref=True, compact=False): #add colours? orientation
      board, turn = bobject.board, bobject.turn
      gridnums = [i for i in range(8,0,-1)]
      gridletters = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
-
+     grid = ""
+     if compact == True : x, y = 0, 0
      for i in range(8):
           if gridref == True:
                line = str(gridnums[i]) + "|"
@@ -30,21 +31,24 @@ def display_board(bobject, x=1, y=0, gridref=True, compact=False): #add colours?
           for j in board[i]:
                line = line + (x * ' ') + constants.binp_dict[j]
           if gridref == False or y == 0:
-               print(line + (y * '\n'))
+               grid += (line + (y * '\n'))
           else:
-               print(line + (y * '\n |'))
+               grid += (line + (y * '\n |'))
                # pretty sure this shouldn't work but it does
+          grid += '\n'
 
      if gridref == True:
-          print((" +") + ('-' * (7 + 7 * x))) # these are display characters
+          grid += ((" +") + ('-' * (7 + 7 * x))) + '\n' # these are display characters
           # don't freak out, this isn't eldritch maths
           lastline = "  "
           for i in gridletters:
                lastline = lastline + (x * ' ') + i
-          print(lastline)
+          grid += (lastline)
 
      if compact == False:
-          print('')
+          grid += ('')
+     
+     return grid
 
 def menu():
     print(startupmsg)
@@ -53,7 +57,7 @@ def menu():
 
 
 bobject = s.load_board()
-display_board(bobject)
+print(gen_display(bobject))
 s.check_captures(bobject)
 
 while True:
@@ -66,7 +70,7 @@ while True:
           if error_msg != None:
                print("Illegal move.")
                print("Reason: " + error_msg)
-          display_board(bobject)
+          print(gen_display(bobject, compact=True))
           print(s.check_captures(bobject))
      else:
           print("Try Again.")
