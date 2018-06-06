@@ -70,7 +70,7 @@ while True:
           if error_msg != None:
                print("Illegal move.")
                print("Reason: " + error_msg)
-          print(gen_display(bobject, compact=True))
+          print(gen_display(bobject))
           print(s.check_captures(bobject))
      else:
           print("Try Again.")
